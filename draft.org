@@ -197,7 +197,7 @@ plt.show()
 trend_df = df.groupby(['Year', 'Attack Type'])['Number of Affected Users'].sum().unstack(fill_value=0)
 
 # Plotting the data as a bar chart
-trend_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+trend_df.plot(kind='bar', stacked=True, figsize=(12, 8), width=0.8)
 
 plt.title('Trend of Number of Affected Users Breakdown by Attack types Over Time (2015-2024)')
 plt.xlabel('Year')
@@ -205,8 +205,8 @@ plt.ylabel('Total Number of Affected Users')
 plt.xticks(rotation=0)  # Keep x-axis labels horizontal
 plt.legend(title='Attack Type')
 plt.grid(axis='y')
-plt.tight_layout(pad=3)
 plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
 plt.show()
 #+end_src
 
@@ -220,7 +220,7 @@ plt.show()
 trend_df = df.groupby(['Year', 'Target Industry'])['Number of Affected Users'].sum().unstack(fill_value=0)
 
 # Plotting the data as a bar chart
-trend_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+trend_df.plot(kind='bar', stacked=True, figsize=(12, 8), width=0.8)
 
 plt.title('Trend of Number of Affected Users Breakdown by Target Industries Over Time (2015-2024)')
 plt.xlabel('Year')
@@ -228,8 +228,8 @@ plt.ylabel('Total Number of Affected Users')
 plt.xticks(rotation=0)  # Keep x-axis labels horizontal
 plt.legend(title='Target Industry')
 plt.grid(axis='y')
-plt.tight_layout(pad=3)
 plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
 plt.show()
 #+end_src
 
@@ -242,7 +242,7 @@ plt.show()
 trend_df = df.groupby(['Year', 'Security Vulnerability Type'])['Number of Affected Users'].sum().unstack(fill_value=0)
 
 # Plotting the data as a bar chart
-trend_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+trend_df.plot(kind='bar', stacked=True, figsize=(12, 8), width=0.8)
 
 plt.title('Trend of Number of Affected Users Breakdown by Vulnerabilities Over Time (2015-2024)')
 plt.xlabel('Year')
@@ -250,8 +250,8 @@ plt.ylabel('Total Number of Affected Users')
 plt.xticks(rotation=0)  # Keep x-axis labels horizontal
 plt.legend(title='Security Vulnerability Type')
 plt.grid(axis='y')
-plt.tight_layout(pad=3.5)
 plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
 plt.show()
 #+end_src
 
