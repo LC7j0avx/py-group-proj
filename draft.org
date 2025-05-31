@@ -1,56 +1,76 @@
-- [Setup](#org1966499)
-  - [Import Packages](#org8200785)
-  - [Load data](#org2e33193)
-- [Trend Analysis](#org2ed3f15)
-  - [Financial Losses](#org4a57adb)
-    - [Overall](#orgc340a02)
-    - [Breakdown by Attack types](#org55d8a5f)
-    - [Breakdown by Target Industries](#org6301ffb)
-    - [Breakdown by Vulnerabilities](#org229a4c3)
-  - [Number of Affected Users](#org4ce521a)
-    - [Overall](#orgb892fbe)
-    - [Breakdown by Attack types](#org2db7c15)
-    - [Breakdown by Target Industries](#org0719e49)
-    - [Breakdown by Vulnerabilities](#org2cb410c)
-- [Geographical Analysis](#org7e7b7e0)
-- [Financial Impact Analysis](#org969cf38)
-- [Industry Analysis](#org79e9825)
-- [Vulnerability Analysis](#orgb01832d)
-- [User Impact Analysis](#org0aacea7)
-- [Response Time Analysis](#orgd080d08)
-- [Defensive Mechanism Effectiveness](#org3750be4)
+#+title: Global Cybersecurity Threats Analysis
+#+OPTIONS: H:3 date:nil author:nil
+#+EXPORT_FILE_NAME: Analysis
 
+* LaTeX config :noexport:
+#+begin_src emacs-lisp :exports none :results none :eval always
+(setq org-latex-listings 'minted
+      org-latex-packages-alist '(("" "minted"))
+      org-latex-minted-options '(("frame" "lines") ("fontsize" "\\footnotesize") ("breakautoindent" "true") ("breaklines" "true"))
+      org-latex-pdf-process
+      '("latexmk -xelatex -quiet -shell-escape -f %f"))
+#+end_src
 
+#+latex_class: article
+#+latex_class_options: [a4paper,12pt]
 
-<a id="org1966499"></a>
+#+LATEX_HEADER: \usepackage[default,scale=0.95]{opensans}
+#+LATEX_HEADER: \usepackage[table]{xcolor}
+#+LATEX_HEADER: \usepackage[margin=0.8in,bmargin=1.0in,tmargin=1.0in]{geometry}
+#+LATEX_HEADER: \usepackage{enumitem, csquotes, caption, array, booktabs, ltablex, adjustbox}
+#+LATEX_HEADER: \usepackage{pifont, mathabx}
+#+LATEX_HEADER: \usepackage{mathpazo}
+#+LATEX_HEADER: \usepackage[dvipsnames]{xcolor}
+#+LATEX_HEADER: \usepackage[inkscapearea=page]{svg}
+#+LATEX_HEADER: \makeatletter
+#+LATEX_HEADER: \newcommand*{\compress}{\@minipagetrue}
+#+LATEX_HEADER: \makeatother
+#+LATEX_HEADER: \newlist{tabenum}{enumerate}{1}
+#+LATEX_HEADER: \setlist[tabenum]{label=\arabic*. ,leftmargin=*, itemsep=2pt, after=\vspace{-\baselineskip}, before=\vspace{-0.5\baselineskip}}
+#+LATEX_HEADER: \newlist{tabitem}{itemize}{1}
+#+LATEX_HEADER: \setlist[tabitem]{label=$\bullet$, leftmargin=*, itemsep=2pt, after=\vspace{-\baselineskip}, before=\vspace{-0.5\baselineskip}}
+#+LATEX_HEADER: \keepXColumns
+#+LaTeX_HEADER: \usepackage{multicol}
+#+LaTeX_HEADER: \usepackage[none]{hyphenat}
+#+LATEX_HEADER: \usepackage[linkcolor=MidnightBlue,urlcolor=Orange]{hyperref}
+#+LATEX_HEADER: \hypersetup{colorlinks=true}
+#+LATEX_HEADER: \AtBeginDocument{%
+#+LATEX_HEADER: \hypersetup{
+#+LATEX_HEADER:  allbordercolors={1 1 1},
+#+LATEX_HEADER:  urlbordercolor=Orange,
+#+LATEX_HEADER:  pdfborderstyle={/S/U/W 1}
+#+LATEX_HEADER: }}
+#+LATEX_HEADER: \usepackage{fontawesome5}
+#+LaTeX_HEADER: \renewcommand\labelitemii{\sqbullet}
+#+LaTeX_HEADER: \renewcommand\labelitemi{\bullet}
 
-# Setup
+* COMMENT Setup
+#+BEGIN_SRC emacs-lisp :session t
+(pipenv-deactivate)
+(pipenv-activate)
+#+END_SRC
 
-
-<a id="org8200785"></a>
-
-## Import Packages
-
-```python
+* Setup
+** Import Packages
+#+begin_src python :session t :eval no-export
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 import seaborn as sns
-```
+#+end_src
 
-
-<a id="org2e33193"></a>
-
-## Load data
-
-```python
+#+RESULTS:
+: None
+** Load data
+#+begin_src python :session t :eval no-export :exports both :results table :wrap src text
 pd.set_option('display.max_columns', 50, 'display.width', 200)
 df = pd.read_csv('data/Global_Cybersecurity_Threats_2015-2024.csv')
 df.head()
-```
+#+end_src
 
-```text
+#+RESULTS:
+#+begin_src text
 |   | Country | Year | Attack Type       | Target Industry    | Financial Loss (in Million $) | Number of Affected Users | Attack Source | Security Vulnerability Type | Defense Mechanism Used | Incident Resolution Time (in Hours) |
 |---+---------+------+-------------------+--------------------+-------------------------------+--------------------------+---------------+-----------------------------+------------------------+-------------------------------------|
 | 0 | China   | 2019 | Phishing          | Education          |                         80.53 |                   773169 | Hacker Group  | Unpatched Software          | VPN                    |                                  63 |
@@ -58,24 +78,13 @@ df.head()
 | 2 | India   | 2017 | Man-in-the-Middle | IT                 |                         38.65 |                   605895 | Hacker Group  | Weak Passwords              | VPN                    |                                  20 |
 | 3 | UK      | 2024 | Ransomware        | Telecommunications |                         41.44 |                   659320 | Nation-state  | Social Engineering          | AI-based Detection     |                                   7 |
 | 4 | Germany | 2018 | Man-in-the-Middle | IT                 |                         74.41 |                   810682 | Insider       | Social Engineering          | VPN                    |                                  68 |
-```
+#+end_src
 
+* Trend Analysis
+** Financial Losses
+*** Overall
 
-<a id="org2ed3f15"></a>
-
-# Trend Analysis
-
-
-<a id="org4a57adb"></a>
-
-## Financial Losses
-
-
-<a id="orgc340a02"></a>
-
-### Overall
-
-```python
+#+begin_src python :session t :eval no-export :var f="output/fig/Trends-Financial-Losses-Overall.png" :results file :exports both
 trend_df = df.groupby('Year')['Financial Loss (in Million $)'].sum()
 
 plt.figure(figsize=(12, 6))
@@ -88,16 +97,14 @@ plt.grid(axis='y')
 
 plt.tight_layout()
 plt.show()
-```
+#+end_src
 
-![img](output/fig/Trends-Financial-Losses-Overall.png)
+#+RESULTS:
+[[file:output/fig/Trends-Financial-Losses-Overall.png]]
 
+*** Breakdown by Attack types
 
-<a id="org55d8a5f"></a>
-
-### Breakdown by Attack types
-
-```python
+#+begin_src python :session t :eval no-export :var f="output/fig/Trends-financial-losses-by-attach-types.png" :results file :exports both
 # Group by Year and Attack Type, summing financial losses
 trend_df = df.groupby(['Year', 'Attack Type'])['Financial Loss (in Million $)'].sum().unstack(fill_value=0)
 
@@ -112,16 +119,14 @@ plt.legend(title='Attack Type')
 plt.grid(axis='y')
 plt.tight_layout()
 plt.show()
-```
+#+end_src
 
-![img](output/fig/Trends-financial-losses-by-attach-types.png)
+#+RESULTS:
+[[file:output/fig/Trends-financial-losses-by-attach-types.png]]
 
+*** Breakdown by Target Industries
 
-<a id="org6301ffb"></a>
-
-### Breakdown by Target Industries
-
-```python
+#+begin_src python :session t :eval no-export :var f="output/fig/Trends-financial-losses-by-target-industries.png" :results file :exports both
 # Group by Year and Target Industry, summing financial losses
 trend_df = df.groupby(['Year', 'Target Industry'])['Financial Loss (in Million $)'].sum().unstack(fill_value=0)
 
@@ -136,16 +141,14 @@ plt.legend(title='Target Industry')
 plt.grid(axis='y')
 plt.tight_layout()
 plt.show()
-```
+#+end_src
 
-![img](output/fig/Trends-financial-losses-by-target-industries.png)
+#+RESULTS:
+[[file:output/fig/Trends-financial-losses-by-target-industries.png]]
 
+*** Breakdown by Vulnerabilities
 
-<a id="org229a4c3"></a>
-
-### Breakdown by Vulnerabilities
-
-```python
+#+begin_src python :session t :eval no-export :var f="output/fig/trends-financial-losses-by-vulnerability-types.png" :results file :exports both
 # Group by Year and Security Vulnerability Type, summing financial losses
 vulnerability_df = df.groupby(['Year', 'Security Vulnerability Type'])['Financial Loss (in Million $)'].sum().unstack(fill_value=0)
 
@@ -160,21 +163,14 @@ plt.legend(title='Vulnerability Type')
 plt.grid(axis='y')
 plt.tight_layout()
 plt.show()
-```
+#+end_src
 
-![img](output/fig/trends-financial-losses-by-vulnerability-types.png)
+#+RESULTS:
+[[file:output/fig/trends-financial-losses-by-vulnerability-types.png]]
+** Number of Affected Users
+*** Overall
 
-
-<a id="org4ce521a"></a>
-
-## Number of Affected Users
-
-
-<a id="orgb892fbe"></a>
-
-### Overall
-
-```python
+#+begin_src python :session t :eval no-export :var f="output/fig/Trends-affected-users-overall.png" :results file :exports both
 trend_df = df.groupby('Year')['Number of Affected Users'].sum()
 
 plt.figure(figsize=(12, 6))
@@ -190,16 +186,14 @@ plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}'))
 
 plt.tight_layout()
 plt.show()
-```
+#+end_src
 
-![img](output/fig/Trends-affected-users-overall.png)
+#+RESULTS:
+[[file:output/fig/Trends-affected-users-overall.png]]
 
+*** Breakdown by Attack types
 
-<a id="org2db7c15"></a>
-
-### Breakdown by Attack types
-
-```python
+#+begin_src python :session t :eval no-export :var f="output/fig/Trends-affected-users-by-attach-types.png" :results file :exports both
 trend_df = df.groupby(['Year', 'Attack Type'])['Number of Affected Users'].sum().unstack(fill_value=0)
 
 # Plotting the data as a bar chart
@@ -214,16 +208,14 @@ plt.grid(axis='y')
 plt.tight_layout(pad=3)
 plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
 plt.show()
-```
+#+end_src
 
-![img](output/fig/Trends-affected-users-by-attach-types.png)
+#+RESULTS:
+[[file:output/fig/Trends-affected-users-by-attach-types.png]]
 
+*** Breakdown by Target Industries
 
-<a id="org0719e49"></a>
-
-### Breakdown by Target Industries
-
-```python
+#+begin_src python :session t :eval no-export :var f="output/fig/Trends-affected-users-by-target-industries.png" :results file :exports both
 
 trend_df = df.groupby(['Year', 'Target Industry'])['Number of Affected Users'].sum().unstack(fill_value=0)
 
@@ -239,16 +231,14 @@ plt.grid(axis='y')
 plt.tight_layout(pad=3)
 plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
 plt.show()
-```
+#+end_src
 
-![img](output/fig/Trends-affected-users-by-target-industries.png)
+#+RESULTS:
+[[file:output/fig/Trends-affected-users-by-target-industries.png]]
 
+*** Breakdown by Vulnerabilities
 
-<a id="org2cb410c"></a>
-
-### Breakdown by Vulnerabilities
-
-```python
+#+begin_src python :session t :eval no-export :var f="output/fig/trends-affected-users-by-vulnerability-types.png" :results file :exports both
 trend_df = df.groupby(['Year', 'Security Vulnerability Type'])['Number of Affected Users'].sum().unstack(fill_value=0)
 
 # Plotting the data as a bar chart
@@ -263,61 +253,34 @@ plt.grid(axis='y')
 plt.tight_layout(pad=3.5)
 plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
 plt.show()
-```
+#+end_src
 
-![img](output/fig/trends-affected-users-by-vulnerability-types.png)
+#+RESULTS:
+[[file:output/fig/trends-affected-users-by-vulnerability-types.png]]
 
+* Geographical Analysis
+- Compare the frequency and impact of cyberattacks across different countries.
+- Identify which countries are most affected by specific attack types.
 
-<a id="org7e7b7e0"></a>
+* Financial Impact Analysis
+- Assess the total financial losses caused by cyberattacks per year or country.
+- Analyze the correlation between attack types and financial losses.
 
-# Geographical Analysis
+* Industry Analysis
+- Determine which industries are most frequently targeted by cyberattacks.
+- Assess the impact of attacks on different sectors, such as healthcare, finance, and education.
 
--   Compare the frequency and impact of cyberattacks across different countries.
--   Identify which countries are most affected by specific attack types.
+* Vulnerability Analysis
+- Identify common security vulnerabilities exploited in attacks.
+- Analyze the effectiveness of various defense mechanisms used against attacks.
 
+* User Impact Analysis
+- Assess how many users are affected by different attack types or in different countries.
+- Explore the relationship between the number of affected users and financial losses.
 
-<a id="org969cf38"></a>
+* Response Time Analysis
+- Analyze the incident resolution times based on attack types or countries.
+- Identify any patterns in response effectiveness.
 
-# Financial Impact Analysis
-
--   Assess the total financial losses caused by cyberattacks per year or country.
--   Analyze the correlation between attack types and financial losses.
-
-
-<a id="org79e9825"></a>
-
-# Industry Analysis
-
--   Determine which industries are most frequently targeted by cyberattacks.
--   Assess the impact of attacks on different sectors, such as healthcare, finance, and education.
-
-
-<a id="orgb01832d"></a>
-
-# Vulnerability Analysis
-
--   Identify common security vulnerabilities exploited in attacks.
--   Analyze the effectiveness of various defense mechanisms used against attacks.
-
-
-<a id="org0aacea7"></a>
-
-# User Impact Analysis
-
--   Assess how many users are affected by different attack types or in different countries.
--   Explore the relationship between the number of affected users and financial losses.
-
-
-<a id="orgd080d08"></a>
-
-# Response Time Analysis
-
--   Analyze the incident resolution times based on attack types or countries.
--   Identify any patterns in response effectiveness.
-
-
-<a id="org3750be4"></a>
-
-# Defensive Mechanism Effectiveness
-
--   Evaluate the success rates of different defense mechanisms against various attack types.
+* Defensive Mechanism Effectiveness
+- Evaluate the success rates of different defense mechanisms against various attack types.
