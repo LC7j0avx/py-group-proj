@@ -2,7 +2,7 @@
 #+OPTIONS: H:3 date:nil author:nil
 #+EXPORT_FILE_NAME: Analysis
 
-* LaTeX config :noexport:
+* Config :noexport:
 #+begin_src emacs-lisp :exports none :results none :eval always
 (setq org-latex-listings 'minted
       org-latex-packages-alist '(("" "minted"))
@@ -88,7 +88,7 @@ df.head()
 trend_df = df.groupby('Year')['Financial Loss (in Million $)'].sum()
 
 plt.figure(figsize=(12, 6))
-plt.bar(trend_df.index, trend_df, width=0.6)
+sns.barplot(x=trend_df.index,y=trend_df, palette="GnBu")
 
 plt.title('Trend of Total Financial Losses Over Time (2015-2024)')
 plt.xlabel('Year')
@@ -96,7 +96,8 @@ plt.ylabel('Total Financial Loss (in Million $)')
 plt.grid(axis='y')
 
 plt.tight_layout()
-plt.show()
+#plt.show()
+
 #+end_src
 
 #+RESULTS:
@@ -174,7 +175,7 @@ plt.show()
 trend_df = df.groupby('Year')['Number of Affected Users'].sum()
 
 plt.figure(figsize=(12, 6))
-plt.bar(trend_df.index, trend_df, width=0.6)
+sns.barplot(x=trend_df.index,y=trend_df, palette="GnBu")
 
 plt.title('Trend of Total Number of Affected Users Over Time (2015-2024)')
 plt.xlabel('Year')
@@ -261,7 +262,39 @@ plt.show()
 * Geographical Analysis
 - Compare the frequency and impact of cyberattacks across different countries.
 - Identify which countries are most affected by specific attack types.
+** Financial Losses
+*** Overall
+#+begin_src python :session t :eval no-export :var f="output/fig/Geographical-financial-losses-overall.png" :results file :exports both
+grouped_df = df.groupby('Country')['Financial Loss (in Million $)'].sum()
 
+# Plotting the pie chart
+plt.figure(figsize=(10, 8))
+wedges, texts, autotexts = plt.pie(grouped_df, autopct=lambda pct:f"${round(grouped_df.sum()*pct/100):,}M\n({pct:.1f}%)", textprops=dict(color="w"), wedgeprops=dict(width=0.7, edgecolor='w'))
+plt.legend(wedges, grouped_df.index, title="Countries", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+plt.title('Financial Losses by Country (2015-2024)')
+plt.tight_layout()
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:output/fig/Geographical-financial-losses-overall.png]]
+
+** Number of Affected Users
+*** Overall
+#+begin_src python :session t :eval no-export :var f="output/fig/Geographical-affected-users-overall.png" :results file :exports both
+country_df = df.groupby('Country')['Number of Affected Users'].sum()
+
+# Plotting the pie chart
+plt.figure(figsize=(10, 8))
+wedges, texts, autotexts = plt.pie(country_df, autopct=lambda pct:f"{round(country_df.sum()*pct/100):,}\n({pct:.1f}%)", textprops=dict(color="w"), wedgeprops=dict(width=0.7, edgecolor='w'))
+plt.legend(wedges, country_df.index, title="Countries", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+plt.title('Number of Affected Users by Country (2015-2024)')
+plt.tight_layout()
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:output/fig/Geographical-affected-users-overall.png]]
 * Financial Impact Analysis
 - Assess the total financial losses caused by cyberattacks per year or country.
 - Analyze the correlation between attack types and financial losses.
