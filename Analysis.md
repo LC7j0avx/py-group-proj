@@ -1,37 +1,39 @@
-- [Setup](#org4b3c0e0)
-  - [Import Packages](#orgee3592b)
-  - [Load data](#org295b770)
-- [Trend Analysis](#orgea18493)
-  - [Financial Losses](#org33e3de7)
-    - [Overall](#orgad1a8e8)
-    - [Breakdown by Attack types](#org2fd0c50)
-    - [Breakdown by Target Industries](#orgc68ec26)
-    - [Breakdown by Vulnerabilities](#org9f486e1)
-  - [Number of Affected Users](#orgd8b9c64)
-    - [Overall](#orgad795ae)
-    - [Breakdown by Attack types](#orge6be380)
-    - [Breakdown by Target Industries](#orga236d69)
-    - [Breakdown by Vulnerabilities](#org50b863b)
-- [Geographical Analysis](#org3e0c205)
-  - [Financial Losses](#org1435948)
-    - [Overall](#org4c25a62)
-  - [Number of Affected Users](#orgf2dfbc9)
-    - [Overall](#org888dfa6)
-- [Financial Impact Analysis](#org609c474)
-- [Industry Analysis](#org2b76c1f)
-- [Vulnerability Analysis](#org9b89400)
-- [User Impact Analysis](#org8583ff2)
-- [Response Time Analysis](#org8abbd15)
-- [Defensive Mechanism Effectiveness](#org701383b)
+- [Setup](#orgb7cefed)
+  - [Import Packages](#org9d63fca)
+  - [Load data](#org1b9b29d)
+- [Trend Analysis](#org83c8266)
+  - [Financial Losses](#org7ff70ba)
+    - [Overall](#org888fdc9)
+    - [Breakdown by Countries](#org1a74c29)
+    - [Breakdown by Attack types](#orgbbf91f6)
+    - [Breakdown by Target Industries](#orga50c398)
+    - [Breakdown by Vulnerabilities](#orgc952683)
+  - [Number of Affected Users](#orgdec50f5)
+    - [Overall](#org35a2a4e)
+    - [Breakdown by Countries](#org6f6e236)
+    - [Breakdown by Attack types](#org980b287)
+    - [Breakdown by Target Industries](#orga1b29d4)
+    - [Breakdown by Vulnerabilities](#org6aec5d1)
+- [Geographical Analysis](#org753ec07)
+  - [Financial Losses](#org5475f32)
+    - [Overall](#org2afe3e6)
+  - [Number of Affected Users](#org489793c)
+    - [Overall](#orgc2375e0)
+- [Financial Impact Analysis](#org0e10eca)
+- [Industry Analysis](#org3921681)
+- [Vulnerability Analysis](#org4a5b729)
+- [User Impact Analysis](#org924137a)
+- [Response Time Analysis](#org2f5f67f)
+- [Defensive Mechanism Effectiveness](#orgc0bb888)
 
 
 
-<a id="org4b3c0e0"></a>
+<a id="orgb7cefed"></a>
 
 # Setup
 
 
-<a id="orgee3592b"></a>
+<a id="org9d63fca"></a>
 
 ## Import Packages
 
@@ -44,7 +46,7 @@ import seaborn as sns
 ```
 
 
-<a id="org295b770"></a>
+<a id="org1b9b29d"></a>
 
 ## Load data
 
@@ -65,17 +67,17 @@ df.head()
 ```
 
 
-<a id="orgea18493"></a>
+<a id="org83c8266"></a>
 
 # Trend Analysis
 
 
-<a id="org33e3de7"></a>
+<a id="org7ff70ba"></a>
 
 ## Financial Losses
 
 
-<a id="orgad1a8e8"></a>
+<a id="org888fdc9"></a>
 
 ### Overall
 
@@ -91,14 +93,55 @@ plt.ylabel('Total Financial Loss (in Million $)')
 plt.grid(axis='y')
 
 plt.tight_layout()
-#plt.show()
-
+plt.show()
 ```
 
 ![img](output/fig/Trends-Financial-Losses-Overall.png)
 
 
-<a id="org2fd0c50"></a>
+<a id="org1a74c29"></a>
+
+### Breakdown by Countries
+
+```python
+trend_df = df.groupby(['Year', 'Country'])['Financial Loss (in Million $)'].sum().unstack(fill_value=0)
+trend_df
+```
+
+```text
+| Year | Australia |  Brazil |              China |             France |            Germany |   India |              Japan |             Russia |                 UK |                USA |
+|------+-----------+---------+--------------------+--------------------+--------------------+---------+--------------------+--------------------+--------------------+--------------------|
+| 2015 |   1083.64 | 1433.53 |            1230.41 |            1678.81 | 1245.1399999999999 | 1588.71 |            1346.21 |            1608.85 | 1729.6200000000001 |            1565.29 |
+| 2016 |   1823.38 | 1507.33 |            1890.11 |            1126.03 |            1752.33 |  739.05 |             626.25 |            1014.82 |            1837.54 |            1630.42 |
+| 2017 |   1472.65 |  1711.9 |            1146.21 |            1891.72 |             1974.1 | 1701.02 |            1847.73 |            1404.13 |            1278.32 |             1833.9 |
+| 2018 |   1483.63 | 1533.38 |            1054.21 |            1251.98 |            1815.61 | 1918.73 |            1331.31 |            1346.33 |            1419.53 |            1565.77 |
+| 2019 |   1090.43 | 1183.03 |            1258.51 |            1343.36 |            1350.34 | 1254.71 | 1215.3700000000001 |            1431.94 |            1808.93 | 1198.0700000000002 |
+| 2020 |   1291.54 | 1611.79 |            1220.73 | 1859.8899999999999 |            1480.43 |  1580.0 |            2038.73 |            1260.93 |             1789.7 |            1634.21 |
+| 2021 |   1372.29 | 1977.69 |            1572.86 |             1669.3 |            1278.91 | 1334.33 |            1586.41 | 1638.1100000000001 |            1973.24 |            1470.27 |
+| 2022 |   1897.56 | 1270.53 | 1564.6499999999999 |            1216.86 |            1649.13 | 1306.11 |            2018.56 |            1841.52 |            1822.47 |            1283.47 |
+| 2023 |   1841.43 |  1709.4 |            1313.26 |            1599.39 |            1877.72 |  1725.2 |            1732.56 |            1171.56 |            1475.31 |            1512.25 |
+| 2024 |   2046.45 | 1844.04 |            1463.52 |            1334.94 |            1369.53 | 1418.26 |            1454.21 |            2016.54 |            1368.33 |            1118.47 |
+```
+
+```python
+# Plotting the data as a bar chart
+trend_df.plot(kind='bar', stacked=True, figsize=(12, 8), width=0.8)
+
+plt.title('Trend of Financial Losses Breakdown by Countries Over Time (2015-2024)')
+plt.xlabel('Year')
+plt.ylabel('Total Financial Loss (in Million $)')
+plt.xticks(rotation=0)  # Keep x-axis labels horizontal
+plt.legend(title='Country')
+plt.grid(axis='y')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
+plt.show()
+```
+
+![img](output/fig/Trends-finaicial-losses-by-countries.png)
+
+
+<a id="orgbbf91f6"></a>
 
 ### Breakdown by Attack types
 
@@ -122,7 +165,7 @@ plt.show()
 ![img](output/fig/Trends-financial-losses-by-attach-types.png)
 
 
-<a id="orgc68ec26"></a>
+<a id="orga50c398"></a>
 
 ### Breakdown by Target Industries
 
@@ -146,7 +189,7 @@ plt.show()
 ![img](output/fig/Trends-financial-losses-by-target-industries.png)
 
 
-<a id="org9f486e1"></a>
+<a id="orgc952683"></a>
 
 ### Breakdown by Vulnerabilities
 
@@ -170,12 +213,12 @@ plt.show()
 ![img](output/fig/trends-financial-losses-by-vulnerability-types.png)
 
 
-<a id="orgd8b9c64"></a>
+<a id="orgdec50f5"></a>
 
 ## Number of Affected Users
 
 
-<a id="orgad795ae"></a>
+<a id="org35a2a4e"></a>
 
 ### Overall
 
@@ -200,7 +243,47 @@ plt.show()
 ![img](output/fig/Trends-affected-users-overall.png)
 
 
-<a id="orge6be380"></a>
+<a id="org6f6e236"></a>
+
+### Breakdown by Countries
+
+```python
+trend_df = df.groupby(['Year', 'Country'])['Number of Affected Users'].sum().unstack(fill_value=0)
+trend_df
+```
+
+| Year | Australia | Brazil   | China    | France   | Germany  | India    | Japan    | Russia   | UK       | USA      |
+|---- |--------- |-------- |-------- |-------- |-------- |-------- |-------- |-------- |-------- |-------- |
+| 2015 | 11071355  | 14625687 | 14315760 | 15389278 | 11814325 | 16632245 | 13971922 | 15601300 | 16071806 | 11799492 |
+| 2016 | 16522223  | 12412484 | 14958638 | 13274133 | 18645691 | 12085161 | 7457248  | 11109717 | 17281052 | 20288237 |
+| 2017 | 15829968  | 19398597 | 9732124  | 19444809 | 16239690 | 14927191 | 18421875 | 15475371 | 14937244 | 17401011 |
+| 2018 | 17636180  | 16441947 | 11024271 | 16231968 | 15503497 | 13355822 | 15287249 | 15885557 | 13163819 | 17244644 |
+| 2019 | 12995593  | 15514625 | 12943762 | 15916554 | 9420383  | 14398125 | 10207336 | 15758126 | 14851883 | 8206541  |
+| 2020 | 11011231  | 15196610 | 13332023 | 19716201 | 12919945 | 19110451 | 17114862 | 16314224 | 17029565 | 17291649 |
+| 2021 | 12383861  | 21467873 | 16158640 | 14749463 | 11751905 | 12091545 | 17272985 | 15183032 | 18009010 | 16173685 |
+| 2022 | 21277139  | 12476964 | 14653503 | 14739242 | 18523873 | 17033943 | 18722065 | 17932425 | 16327854 | 11576152 |
+| 2023 | 15472616  | 19925490 | 13188428 | 12589421 | 16617789 | 17031851 | 17499894 | 12500992 | 16594577 | 12884598 |
+| 2024 | 15811664  | 21346703 | 19273789 | 14178073 | 16238260 | 12512325 | 12756378 | 16431091 | 13198173 | 11334861 |
+
+```python
+# Plotting the data as a bar chart
+trend_df.plot(kind='bar', stacked=True, figsize=(12, 8), width=0.8)
+
+plt.title('Trend of Number of Affected Users Breakdown by Countries Over Time (2015-2024)')
+plt.xlabel('Year')
+plt.ylabel('Total Number of Affected Users')
+plt.xticks(rotation=0)  # Keep x-axis labels horizontal
+plt.legend(title='Country')
+plt.grid(axis='y')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
+plt.show()
+```
+
+![img](output/fig/Trends-affected-users-by-countries.png)
+
+
+<a id="org980b287"></a>
 
 ### Breakdown by Attack types
 
@@ -224,7 +307,7 @@ plt.show()
 ![img](output/fig/Trends-affected-users-by-attach-types.png)
 
 
-<a id="orga236d69"></a>
+<a id="orga1b29d4"></a>
 
 ### Breakdown by Target Industries
 
@@ -249,7 +332,7 @@ plt.show()
 ![img](output/fig/Trends-affected-users-by-target-industries.png)
 
 
-<a id="org50b863b"></a>
+<a id="org6aec5d1"></a>
 
 ### Breakdown by Vulnerabilities
 
@@ -273,7 +356,7 @@ plt.show()
 ![img](output/fig/trends-affected-users-by-vulnerability-types.png)
 
 
-<a id="org3e0c205"></a>
+<a id="org753ec07"></a>
 
 # Geographical Analysis
 
@@ -281,12 +364,12 @@ plt.show()
 -   Identify which countries are most affected by specific attack types.
 
 
-<a id="org1435948"></a>
+<a id="org5475f32"></a>
 
 ## Financial Losses
 
 
-<a id="org4c25a62"></a>
+<a id="org2afe3e6"></a>
 
 ### Overall
 
@@ -305,12 +388,12 @@ plt.show()
 ![img](output/fig/Geographical-financial-losses-overall.png)
 
 
-<a id="orgf2dfbc9"></a>
+<a id="org489793c"></a>
 
 ## Number of Affected Users
 
 
-<a id="org888dfa6"></a>
+<a id="orgc2375e0"></a>
 
 ### Overall
 
@@ -329,7 +412,7 @@ plt.show()
 ![img](output/fig/Geographical-affected-users-overall.png)
 
 
-<a id="org609c474"></a>
+<a id="org0e10eca"></a>
 
 # Financial Impact Analysis
 
@@ -337,7 +420,7 @@ plt.show()
 -   Analyze the correlation between attack types and financial losses.
 
 
-<a id="org2b76c1f"></a>
+<a id="org3921681"></a>
 
 # Industry Analysis
 
@@ -345,7 +428,7 @@ plt.show()
 -   Assess the impact of attacks on different sectors, such as healthcare, finance, and education.
 
 
-<a id="org9b89400"></a>
+<a id="org4a5b729"></a>
 
 # Vulnerability Analysis
 
@@ -353,7 +436,7 @@ plt.show()
 -   Analyze the effectiveness of various defense mechanisms used against attacks.
 
 
-<a id="org8583ff2"></a>
+<a id="org924137a"></a>
 
 # User Impact Analysis
 
@@ -361,7 +444,7 @@ plt.show()
 -   Explore the relationship between the number of affected users and financial losses.
 
 
-<a id="org8abbd15"></a>
+<a id="org2f5f67f"></a>
 
 # Response Time Analysis
 
@@ -369,7 +452,7 @@ plt.show()
 -   Identify any patterns in response effectiveness.
 
 
-<a id="org701383b"></a>
+<a id="orgc0bb888"></a>
 
 # Defensive Mechanism Effectiveness
 
