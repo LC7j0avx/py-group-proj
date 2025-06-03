@@ -1,39 +1,45 @@
-- [Setup](#orgb7cefed)
-  - [Import Packages](#org9d63fca)
-  - [Load data](#org1b9b29d)
-- [Trend Analysis](#org83c8266)
-  - [Financial Losses](#org7ff70ba)
-    - [Overall](#org888fdc9)
-    - [Breakdown by Countries](#org1a74c29)
-    - [Breakdown by Attack types](#orgbbf91f6)
-    - [Breakdown by Target Industries](#orga50c398)
-    - [Breakdown by Vulnerabilities](#orgc952683)
-  - [Number of Affected Users](#orgdec50f5)
-    - [Overall](#org35a2a4e)
-    - [Breakdown by Countries](#org6f6e236)
-    - [Breakdown by Attack types](#org980b287)
-    - [Breakdown by Target Industries](#orga1b29d4)
-    - [Breakdown by Vulnerabilities](#org6aec5d1)
-- [Geographical Analysis](#org753ec07)
-  - [Financial Losses](#org5475f32)
-    - [Overall](#org2afe3e6)
-  - [Number of Affected Users](#org489793c)
-    - [Overall](#orgc2375e0)
-- [Financial Impact Analysis](#org0e10eca)
-- [Industry Analysis](#org3921681)
-- [Vulnerability Analysis](#org4a5b729)
-- [User Impact Analysis](#org924137a)
-- [Response Time Analysis](#org2f5f67f)
-- [Defensive Mechanism Effectiveness](#orgc0bb888)
+- [Setup](#org31d1413)
+  - [Import Packages](#org585524d)
+  - [Load data](#org2a9559d)
+- [Trend Analysis](#orgbdb6368)
+  - [Financial Losses](#org4e8ae1d)
+    - [Overall](#orgfb460df)
+    - [Breakdown by Countries](#org7f49feb)
+    - [Breakdown by Attack Types](#org21a4d15)
+    - [Breakdown by Target Industries](#org20f2f60)
+    - [Breakdown by Vulnerability Types](#org27fa8b3)
+  - [Number of Affected Users](#orgb8171c4)
+    - [Overall](#org6b78fcd)
+    - [Breakdown by Countries](#orga4c9d5b)
+    - [Breakdown by Attack Types](#org77ccedc)
+    - [Breakdown by Target Industries](#orgf50b339)
+    - [Breakdown by Vulnerability Types](#orga1758ef)
+- [Geographical Analysis](#org0798156)
+  - [Financial Losses](#org225eebc)
+    - [Overall](#orgb40eb59)
+    - [Breakdown by Attack Types](#org27c9271)
+    - [Breakdown by Target Industries](#orgc196684)
+    - [by Target Industries](#orgeb1d5fc)
+  - [Number of Affected Users](#org10bd346)
+    - [Overall](#orgf20e947)
+    - [Breakdown by Attack Types](#org17e8313)
+    - [Breakdown by Target Industries](#org7d6a877)
+    - [Breakdown by Vulnerabilities](#orgd7618b5)
+- [Financial Impact Analysis](#org9966e45)
+- [Industry Analysis](#org103a92d)
+- [Vulnerability Analysis](#org8bd41af)
+- [User Impact Analysis](#orge1997b8)
+- [Response Time Analysis](#org78206f1)
+- [Defensive Mechanism Effectiveness](#orgba33577)
 
 
 
-<a id="orgb7cefed"></a>
+<a id="org31d1413"></a>
 
 # Setup
 
 
-<a id="org9d63fca"></a>
+<a id="org585524d"></a>
 
 ## Import Packages
 
@@ -46,7 +52,7 @@ import seaborn as sns
 ```
 
 
-<a id="org1b9b29d"></a>
+<a id="org2a9559d"></a>
 
 ## Load data
 
@@ -67,17 +73,17 @@ df.head()
 ```
 
 
-<a id="org83c8266"></a>
+<a id="orgbdb6368"></a>
 
 # Trend Analysis
 
 
-<a id="org7ff70ba"></a>
+<a id="org4e8ae1d"></a>
 
 ## Financial Losses
 
 
-<a id="org888fdc9"></a>
+<a id="orgfb460df"></a>
 
 ### Overall
 
@@ -99,7 +105,7 @@ plt.show()
 ![img](output/fig/Trends-Financial-Losses-Overall.png)
 
 
-<a id="org1a74c29"></a>
+<a id="org7f49feb"></a>
 
 ### Breakdown by Countries
 
@@ -141,9 +147,9 @@ plt.show()
 ![img](output/fig/Trends-finaicial-losses-by-countries.png)
 
 
-<a id="orgbbf91f6"></a>
+<a id="org21a4d15"></a>
 
-### Breakdown by Attack types
+### Breakdown by Attack Types
 
 ```python
 # Group by Year and Attack Type, summing financial losses
@@ -165,7 +171,7 @@ plt.show()
 ![img](output/fig/Trends-financial-losses-by-attach-types.png)
 
 
-<a id="orga50c398"></a>
+<a id="org20f2f60"></a>
 
 ### Breakdown by Target Industries
 
@@ -189,9 +195,9 @@ plt.show()
 ![img](output/fig/Trends-financial-losses-by-target-industries.png)
 
 
-<a id="orgc952683"></a>
+<a id="org27fa8b3"></a>
 
-### Breakdown by Vulnerabilities
+### Breakdown by Vulnerability Types
 
 ```python
 # Group by Year and Security Vulnerability Type, summing financial losses
@@ -213,12 +219,12 @@ plt.show()
 ![img](output/fig/trends-financial-losses-by-vulnerability-types.png)
 
 
-<a id="orgdec50f5"></a>
+<a id="orgb8171c4"></a>
 
 ## Number of Affected Users
 
 
-<a id="org35a2a4e"></a>
+<a id="org6b78fcd"></a>
 
 ### Overall
 
@@ -243,7 +249,7 @@ plt.show()
 ![img](output/fig/Trends-affected-users-overall.png)
 
 
-<a id="org6f6e236"></a>
+<a id="orga4c9d5b"></a>
 
 ### Breakdown by Countries
 
@@ -283,9 +289,9 @@ plt.show()
 ![img](output/fig/Trends-affected-users-by-countries.png)
 
 
-<a id="org980b287"></a>
+<a id="org77ccedc"></a>
 
-### Breakdown by Attack types
+### Breakdown by Attack Types
 
 ```python
 trend_df = df.groupby(['Year', 'Attack Type'])['Number of Affected Users'].sum().unstack(fill_value=0)
@@ -307,7 +313,7 @@ plt.show()
 ![img](output/fig/Trends-affected-users-by-attach-types.png)
 
 
-<a id="orga1b29d4"></a>
+<a id="orgf50b339"></a>
 
 ### Breakdown by Target Industries
 
@@ -332,9 +338,9 @@ plt.show()
 ![img](output/fig/Trends-affected-users-by-target-industries.png)
 
 
-<a id="org6aec5d1"></a>
+<a id="orga1758ef"></a>
 
-### Breakdown by Vulnerabilities
+### Breakdown by Vulnerability Types
 
 ```python
 trend_df = df.groupby(['Year', 'Security Vulnerability Type'])['Number of Affected Users'].sum().unstack(fill_value=0)
@@ -356,7 +362,7 @@ plt.show()
 ![img](output/fig/trends-affected-users-by-vulnerability-types.png)
 
 
-<a id="org753ec07"></a>
+<a id="org0798156"></a>
 
 # Geographical Analysis
 
@@ -364,12 +370,12 @@ plt.show()
 -   Identify which countries are most affected by specific attack types.
 
 
-<a id="org5475f32"></a>
+<a id="org225eebc"></a>
 
 ## Financial Losses
 
 
-<a id="org2afe3e6"></a>
+<a id="orgb40eb59"></a>
 
 ### Overall
 
@@ -388,12 +394,132 @@ plt.show()
 ![img](output/fig/Geographical-financial-losses-overall.png)
 
 
-<a id="org489793c"></a>
+<a id="org27c9271"></a>
+
+### Breakdown by Attack Types
+
+```python
+grouped_df = df.groupby(['Country', 'Attack Type'])['Financial Loss (in Million $)'].sum().unstack(fill_value=0)
+grouped_df
+```
+
+| Country   | DDoS    | Malware | Man-in-the-Middle | Phishing           | Ransomware         | SQL Injection      |
+|--------- |------- |------- |----------------- |------------------ |------------------ |------------------ |
+| Australia | 3071.53 | 3026.17 | 2534.89           | 2911.85            | 2019.07            | 1839.49            |
+| Brazil    | 3083.66 | 2557.21 | 2160.92           | 2934.49            | 2152.6             | 2893.7400000000002 |
+| China     | 2665.38 | 2276.29 | 1981.22           | 2143.7400000000002 | 2566.17            | 2081.67            |
+| France    | 2504.98 | 2223.92 | 1891.18           | 3170.87            | 2657.22            | 2524.11            |
+| Germany   | 2188.92 | 2726.08 | 2986.04           | 2396.63            | 2269.19            | 3226.38            |
+| India     | 2299.43 | 2097.0  | 2376.06           | 2313.18            | 2678.64            | 2801.81            |
+| Japan     | 2515.52 | 2094.56 | 2626.23           | 3141.36            | 2125.44            | 2694.23            |
+| Russia    | 2925.27 | 2446.15 | 2471.18           | 1767.5             | 2859.2400000000002 | 2265.39            |
+| UK        | 3143.2  | 2528.71 | 2531.63           | 3128.33            | 2491.42            | 2679.7             |
+| USA       | 3233.03 | 1991.86 | 1991.52           | 2785.34            | 2660.33            | 2150.04            |
+
+```python
+# Plotting the data as a bar chart
+grouped_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+
+plt.title('Financial Losses by Different Attack Types in Different Countries')
+plt.xlabel('Country')
+plt.ylabel('Total Financial Loss (in Million $)')
+plt.xticks(rotation=0)  # Keep x-axis labels horizontal
+plt.legend(ncol=6, loc="upper center", bbox_to_anchor=(0.5,-0.08))
+plt.grid(axis='y')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
+plt.show()
+```
+
+![img](output/fig/Geographical-financial-losses-by-attack-types.png)
+
+
+<a id="orgc196684"></a>
+
+### Breakdown by Target Industries
+
+```python
+grouped_df = df.groupby(['Country', 'Target Industry'])['Financial Loss (in Million $)'].sum().unstack(fill_value=0)
+grouped_df
+```
+
+| Country   | Banking | Education          | Government | Healthcare | IT                 | Retail  | Telecommunications |
+|--------- |------- |------------------ |---------- |---------- |------------------ |------- |------------------ |
+| Australia | 2285.81 | 2243.91            | 1941.91    | 2808.7     | 2011.6399999999999 | 2036.18 | 2074.85            |
+| Brazil    | 2292.02 | 2449.51            | 1749.89    | 2609.41    | 2575.09            | 2323.8  | 1782.9             |
+| China     | 1788.04 | 2247.96            | 1728.75    | 2073.64    | 2293.12            | 1520.02 | 2062.94            |
+| France    | 2036.86 | 1728.59            | 2076.87    | 2445.17    | 2827.31            | 2434.22 | 1423.26            |
+| Germany   | 2622.86 | 1397.1             | 2591.92    | 2356.53    | 2256.15            | 2262.57 | 2306.11            |
+| India     | 2296.45 | 2004.3799999999999 | 2215.0     | 1631.46    | 2723.52            | 1892.15 | 1803.16            |
+| Japan     | 2092.3  | 2186.71            | 1864.9     | 1838.63    | 2406.81            | 2391.85 | 2416.14            |
+| Russia    | 2620.95 | 2214.73            | 2000.22    | 1627.85    | 2284.95            | 1449.33 | 2536.7             |
+| UK        | 2769.94 | 1616.99            | 2554.67    | 1996.82    | 3067.59            | 2047.72 | 2449.2599999999998 |
+| USA       | 1967.16 | 1981.55            | 2481.2     | 1653.08    | 2363.65            | 2761.71 | 1603.77            |
+
+```python
+# Plotting the data as a bar chart
+grouped_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+
+plt.title('Financial Losses by Target Industries in Different Countries')
+plt.xlabel('Country')
+plt.ylabel('Total Financial Loss (in Million $)')
+plt.xticks(rotation=0)  # Keep x-axis labels horizontal
+plt.legend(ncol=6, loc="upper center", bbox_to_anchor=(0.5,-0.08))
+plt.grid(axis='y')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
+plt.show()
+```
+
+![img](output/fig/Geographical-financial-losses-by-industries.png)
+
+
+<a id="orgeb1d5fc"></a>
+
+### by Target Industries
+
+```python
+grouped_df = df.groupby(['Country', 'Security Vulnerability Type'])['Financial Loss (in Million $)'].sum().unstack(fill_value=0)
+grouped_df
+```
+
+| Country   | Social Engineering | Unpatched Software | Weak Passwords     | Zero-day |
+|--------- |------------------ |------------------ |------------------ |-------- |
+| Australia | 3692.44            | 3811.46            | 3819.65            | 4079.45  |
+| Brazil    | 4166.16            | 3491.26            | 4272.7699999999995 | 3852.43  |
+| China     | 3836.52            | 2887.97            | 3269.9             | 3720.08  |
+| France    | 3659.89            | 3493.17            | 3067.7             | 4751.52  |
+| Germany   | 3689.08            | 4702.51            | 3606.09            | 3795.56  |
+| India     | 2911.76            | 4244.57            | 3256.32            | 4153.47  |
+| Japan     | 3879.2599999999998 | 3134.11            | 3852.43            | 4331.54  |
+| Russia    | 3773.9700000000003 | 3839.04            | 3711.48            | 3410.24  |
+| UK        | 4664.55            | 4139.15            | 4040.76            | 3658.53  |
+| USA       | 3752.91            | 3281.19            | 3982.3             | 3795.72  |
+
+```python
+# Plotting the data as a bar chart
+grouped_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+
+plt.title('Financial Losses by Vulnerability Types in Different Countries')
+plt.xlabel('Country')
+plt.ylabel('Total Financial Loss (in Million $)')
+plt.xticks(rotation=0)  # Keep x-axis labels horizontal
+plt.legend(ncol=6, loc="upper center", bbox_to_anchor=(0.5,-0.08))
+plt.grid(axis='y')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
+plt.show()
+```
+
+![img](output/fig/Geographical-financial-losses-by-vulnerability-types.png)
+
+
+<a id="org10bd346"></a>
 
 ## Number of Affected Users
 
 
-<a id="orgc2375e0"></a>
+<a id="orgf20e947"></a>
 
 ### Overall
 
@@ -412,7 +538,127 @@ plt.show()
 ![img](output/fig/Geographical-affected-users-overall.png)
 
 
-<a id="org0e10eca"></a>
+<a id="org17e8313"></a>
+
+### Breakdown by Attack Types
+
+```python
+grouped_df = df.groupby(['Country', 'Attack Type'])['Number of Affected Users'].sum().unstack(fill_value=0)
+grouped_df
+```
+
+| Country   | DDoS     | Malware  | Man-in-the-Middle | Phishing | Ransomware | SQL Injection |
+|--------- |-------- |-------- |----------------- |-------- |---------- |------------- |
+| Australia | 31680693 | 33960220 | 22518909          | 22390813 | 19177903   | 20283292      |
+| Brazil    | 32331598 | 27529028 | 22472326          | 25045910 | 28170653   | 33257465      |
+| China     | 25216140 | 22234189 | 22677828          | 25066462 | 23290803   | 21095516      |
+| France    | 29042198 | 22498584 | 20683824          | 30408495 | 24458280   | 29137761      |
+| Germany   | 22714784 | 22593199 | 24835152          | 23820513 | 21487419   | 32224291      |
+| India     | 21347569 | 22395214 | 26568402          | 26105954 | 26491982   | 26269538      |
+| Japan     | 24214976 | 27181900 | 25028943          | 25750354 | 22015956   | 24519685      |
+| Russia    | 25381101 | 20041990 | 23953238          | 24013027 | 33144185   | 25658294      |
+| UK        | 24662842 | 27415131 | 27565197          | 28015585 | 23944806   | 25861422      |
+| USA       | 28609364 | 20908958 | 22405704          | 27100862 | 25710920   | 19465062      |
+
+```python
+# Plotting the data as a bar chart
+grouped_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+
+plt.title('Number of Users Affected by Different Attack Types in Different Countries')
+plt.xlabel('Country')
+plt.ylabel('Total Number of Affected Users')
+plt.xticks(rotation=0)  # Keep x-axis labels horizontal
+plt.legend(ncol=6, loc="upper center", bbox_to_anchor=(0.5,-0.08))
+plt.grid(axis='y')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
+plt.show()
+```
+
+![img](output/fig/Geographical-affected-users-by-attack-types.png)
+
+
+<a id="org7d6a877"></a>
+
+### Breakdown by Target Industries
+
+```python
+grouped_df = df.groupby(['Country', 'Target Industry'])['Number of Affected Users'].sum().unstack(fill_value=0)
+grouped_df
+```
+
+| Country   | Banking  | Education | Government | Healthcare | IT       | Retail   | Telecommunications |
+|--------- |-------- |--------- |---------- |---------- |-------- |-------- |------------------ |
+| Australia | 24091736 | 19353282  | 21431052   | 25171156   | 19880173 | 21540256 | 18544175           |
+| Brazil    | 26155727 | 24832426  | 20148467   | 28345995   | 28113529 | 19873671 | 21337165           |
+| China     | 16655683 | 23978380  | 15119967   | 25036722   | 25654123 | 13816525 | 19319538           |
+| France    | 18432132 | 19438280  | 24701233   | 27765020   | 27984331 | 25145910 | 12762236           |
+| Germany   | 22179754 | 16906535  | 20548248   | 20001882   | 26734222 | 19169177 | 22135540           |
+| India     | 23877886 | 20211347  | 18497871   | 18616483   | 28243125 | 20595810 | 19136137           |
+| Japan     | 19328408 | 27833081  | 18163470   | 18311429   | 23573823 | 23358354 | 18143249           |
+| Russia    | 26445149 | 25388211  | 20084391   | 18869355   | 23682282 | 11980441 | 25742006           |
+| UK        | 27385750 | 19217857  | 23921622   | 17977995   | 23622708 | 21909685 | 23429366           |
+| USA       | 20546181 | 17845333  | 18622709   | 16175879   | 22606513 | 29386557 | 19017698           |
+
+```python
+# Plotting the data as a bar chart
+grouped_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+
+plt.title('Number of Users Affected by Target Industries in Different Countries')
+plt.xlabel('Country')
+plt.ylabel('Total Number of Affected Users')
+plt.xticks(rotation=0)  # Keep x-axis labels horizontal
+plt.legend(ncol=6, loc="upper center", bbox_to_anchor=(0.5,-0.08))
+plt.grid(axis='y')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
+plt.show()
+```
+
+![img](output/fig/Geographical-affected-users-by-industries.png)
+
+
+<a id="orgd7618b5"></a>
+
+### Breakdown by Vulnerabilities
+
+```python
+grouped_df = df.groupby(['Country', 'Security Vulnerability Type'])['Number of Affected Users'].sum().unstack(fill_value=0)
+grouped_df
+```
+
+| Country   | Social Engineering | Unpatched Software | Weak Passwords | Zero-day |
+|--------- |------------------ |------------------ |-------------- |-------- |
+| Australia | 32655628           | 37239422           | 38511547       | 41605233 |
+| Brazil    | 44264096           | 32665808           | 47545440       | 44331636 |
+| China     | 37903166           | 33993101           | 27718498       | 39966173 |
+| France    | 41497066           | 33848891           | 31830875       | 49052310 |
+| Germany   | 28330489           | 44417172           | 40267316       | 34660381 |
+| India     | 32481881           | 43014921           | 33843651       | 39838206 |
+| Japan     | 38440588           | 29961591           | 39611830       | 40697805 |
+| Russia    | 40737980           | 39032497           | 37186290       | 35235068 |
+| UK        | 40211515           | 36562515           | 41485989       | 39204964 |
+| USA       | 37576452           | 33803605           | 41116265       | 31704548 |
+
+```python
+# Plotting the data as a bar chart
+grouped_df.plot(kind='bar', figsize=(12, 8), width=0.8)
+
+plt.title('Number of Users Affected by Vulnerability Types in Different Countries')
+plt.xlabel('Country')
+plt.ylabel('Total Number of Affected Users')
+plt.xticks(rotation=0)  # Keep x-axis labels horizontal
+plt.legend(ncol=6, loc="upper center", bbox_to_anchor=(0.5,-0.08))
+plt.grid(axis='y')
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{int(x):,}')) # Apply number formatting
+plt.tight_layout()
+plt.show()
+```
+
+![img](output/fig/Geographical-affected-users-by-.png)
+
+
+<a id="org9966e45"></a>
 
 # Financial Impact Analysis
 
@@ -420,7 +666,7 @@ plt.show()
 -   Analyze the correlation between attack types and financial losses.
 
 
-<a id="org3921681"></a>
+<a id="org103a92d"></a>
 
 # Industry Analysis
 
@@ -428,7 +674,7 @@ plt.show()
 -   Assess the impact of attacks on different sectors, such as healthcare, finance, and education.
 
 
-<a id="org4a5b729"></a>
+<a id="org8bd41af"></a>
 
 # Vulnerability Analysis
 
@@ -436,7 +682,7 @@ plt.show()
 -   Analyze the effectiveness of various defense mechanisms used against attacks.
 
 
-<a id="org924137a"></a>
+<a id="orge1997b8"></a>
 
 # User Impact Analysis
 
@@ -444,7 +690,7 @@ plt.show()
 -   Explore the relationship between the number of affected users and financial losses.
 
 
-<a id="org2f5f67f"></a>
+<a id="org78206f1"></a>
 
 # Response Time Analysis
 
@@ -452,7 +698,7 @@ plt.show()
 -   Identify any patterns in response effectiveness.
 
 
-<a id="orgc0bb888"></a>
+<a id="orgba33577"></a>
 
 # Defensive Mechanism Effectiveness
 
